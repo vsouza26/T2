@@ -81,24 +81,6 @@ que deverão ser produzidos pelo seu analisador sintático:
 
 ```[program  ... ]```
 
-* ```[enum-type-declaration  ... ]```
-
-   * [ID]                 ---> nome do tipo
-
-   * [enum-consts ... ]
-
-      * [enum-const  ... ]   ---> repetir n vezes, ver exemplo no final da página
-
-         * [ID]            ---> nome da constante
-
-* ```[const-declaration  ... ]```
-
-   * [int]                ---> nome do tipo
-
-   * [ID]                 ---> nome da constante
-
-   * [NUM]                ---> valor da constante
-
 * ```[var-declaration  ... ]```
 
    * [int]                ---> nome do tipo
@@ -107,15 +89,9 @@ que deverão ser produzidos pelo seu analisador sintático:
 
    * ```[\[\]]```               ---> (opcional) símbolo para descrever uma váriavel como array; IMPORTANTE: o símbolo de barra invertida (backslash \) é usado para não interpretar [ ou ] como nós de colchetes, mas para serem símbolos visíveis na AST.
 
-* ```[enum-var-declaration  ... ]```
-
-   * [ID]                 ---> nome do tipo enumerado
-
-   * [ID]                 ---> nome da variável
-
 * ```[fun-declaration  ... ]```
 
-   * [int] / [void]       ---> o tipo int ou o tipo void
+   * [int] / [void]       ---> o tipo int ou uso de void
 
    * [ID]                 ---> nome de função
 
@@ -150,15 +126,13 @@ que deverão ser produzidos pelo seu analisador sintático:
       * ver EXPRESSION             --> definição recursiva de qualquer expressão válida
 
    - ```[OP ... ]```              --> operadores de expressão binária
-     ```OP pode ser +, -, *, /, <, <=, >, >=, ==, !=, =, !, &&, ou ||```
+     ```OP pode ser: +, -, *, /, <, <=, >, >=, ==, !=, =, !```
 
       * [var  ... ]      ---> uso de variável
 
          * [ID]
 
          * [NUM]     --> (opcional) índice de array
-
-      * [const [ID]]      ---> uso de constante definida pelo usuario
 
       * [NUM]             ---> uso de valor (literal) do tipo integer
 
@@ -168,16 +142,7 @@ que deverão ser produzidos pelo seu analisador sintático:
 
          * [args ... ]         ---> argumentos de função
 
-            * [var ... ]
-
-            * [NUM]
-
-            * [call ... ]
-
-            * [OP ... ]        ---> expressão binária ou unária
-
-      * [OP ... ]              ---> recursivamente outra expressão binária
-
+      * [OP ... ]        ---> expressão binária ou unária
 
 ## Bison e Flex
 
