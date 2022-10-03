@@ -316,7 +316,7 @@ Importante: Caracteres de espacejamento serão ignorados na correção automáti
 ### Ilustração de AST gerada com a ferramenta 
 [RSyntaxTree](https://yohasebe.com/rsyntaxtree/)
 
-![AST](./figd/AST_rsyntaxast.png)
+![AST](./figs/ast_rsyntax.png)
 
 ## Outro Exemplo
 ### Entrada em C-
