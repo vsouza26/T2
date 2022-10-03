@@ -1,6 +1,3 @@
-# T2
-
-
 # Projeto de um Compilador
 
 ## Trabalho 2 (T2): Análise Sintática
