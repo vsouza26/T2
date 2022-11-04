@@ -62,7 +62,7 @@ cminus.tab.c: src/cminus.y
 	@ echo ' ' 
 
 clean:
-	rm -rf *.o *~ lex.yy.c cminus.tab.* token.h src/token.h$(PROJ_NAME)
+	rm -rf *.o *~ lex.yy.c cminus.tab.* token.h src/token.h $(PROJ_NAME)
 
 .PHONY: all clean
 
