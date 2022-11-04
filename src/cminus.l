@@ -18,32 +18,33 @@
 "//".*                      { /* no action */ }
 
 int                         { return TOKEN_INT; }
-void                        { return ... }
+void                        { /* return ... */ }
 
-/* MODIFICAR para incluir todas as keywords */
+	/* MODIFICAR para incluir todas as keywords */
 
-do 			    { return TOKEN_DO; }
-else                        { return  }
-if                          { return  }
-return                      { return  }
-while                       { return ... }
+do 			    { /* return ... */ }
+else                        { /* return ... */ }
+if                          { /* return ... */ }
+return                      { /* return ... */ }
+while                       { /* return ... */ }
 
-[A-Za-z]([A-Za-z_]|[0-9])*  { return TOKEN_ID; }
-[0-9]+                      { return TOKEN_NUM; }
+[A-Za-z]([A-Za-z_]|[0-9])*  { /* return ... */ }
+[0-9]+                      { /* return ... */ }
 
-"+"			    { return TOKEN_ADD; }
-"-" 			    { return TOKEN_MINUS; }
-"*"			    { return ... }
-"/"			    { return ... }
+"+"			    { /* return ... */ }
+"-" 			    { /* return ... */ }
+"*"			    { /* return ... */ }
+"/"			    { /* return ... */ }
 
-/* MODIFICAR para retornar token específico */
+	/* MODIFICAR: separar simbolos para retornar token específico */
  
-("="|"<"|">")               { return SYM; }
-("<="|">="|"=="|"!=")       { return SYM; }
-(";"|",")                   { return SYM; }
-("("|")"|"["|"]"|"{"|"}")   { return SYM; }
+("="|"<"|">")               {  }
+("<="|">="|"=="|"!=")       {  }
+(";"|",")                   {  }
+("("|")"|"["|"]"|"{"|"}")   {  }
 
 [ \t\n]                     { /* no action */ }
 .                           { return TOKEN_ERROR; }
 
 %%
+

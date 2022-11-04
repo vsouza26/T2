@@ -18,8 +18,6 @@ extern int yylex();
 
 %token TOKEN_ERROR
 
-%type <decl> program
-
 %start program
 
 %%
