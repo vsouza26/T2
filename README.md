@@ -5,7 +5,8 @@
 Analisador sintático bottom-up para C-
 
 Nesta parte do projeto, você irá implementar um analisador sintático _bottom-up_ para a [linguagem C-](./cminus/cminus-02.md) com
-construção da árvore sintática abstrata (AST - Abstract Syntax Tree) para programas C- corretos.
+construção da árvore sintática abstrata (AST - Abstract Syntax Tree) para 
+programas C- corretos.
 O trabalho prático T2 inclui a implementação de um analisador sintático, construído com a ferramenta _Bison_, 
 funções auxiliares para a construção da AST durante o processo de análise, 
 uma função de _prettyprint_ para gerar uma representação externa para AST 
@@ -21,20 +22,27 @@ e disponibilizar uma referência para a raiz da AST construída, para ser usada 
 Em caso de erro sintático detectado, 
 apenas uma mensagem de erro deverá ser reportada e a análise sintática deve ser interrompida.
 
-Funções auxiliares para a criação e manipulação da AST e
-para a geração de uma representação usando a notação de _labelled bracketing_
-(explicada mais adiante) para a AST retornada também fazem parte do T2.
+O código de funções auxiliares para a criação e manipulação da AST e
+para a geração de uma representação usando a notação de 
+_labelled bracketing_ para a AST retornada 
+(explicada mais adiante) também faz parte do T2
+e é fornecido pela professora.
 
-Antes de iniciar a sua implementação, recomendamos como leitura complementar os capítulos 5 e 6
-do livro "Introduction to Compilers and Language Design" de Douglas Thain.
-Apesar da sintaxe de C- ser um pouco diferente da usada no livro acima, 
+Antes de iniciar a implementação do T2 em equipe, 
+recomendamos a leitura dos capítulos 5 e 6 do livro 
+"Introduction to Compilers and Language Design" de Douglas Thain.
+Apesar da sintaxe de C- ser um pouco diferente da usada no livro de Thain, 
 os exemplos de código e o material são úteis.
-Outra consulta interessante é uma [especificação yacc para ANSI C](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html)
+Recomendamos fortemente que os exercícios E5, E6 e E7 sejam resolvidos antes de começar a trabalhar no trabalho T2.
+
+Uma consulta interessante é uma [especificação yacc para ANSI C](https://www.lysator.liu.se/c/ANSI-C-grammar-y.html)
 feita no século passado (década de 80).
 
-O analisador sintático para C- deverá ser desenvolvido com Bison, com base na
-[especificação sintática de C-](./cminus/cminus-02.md)
-e integrado com uma nova versão do analisador léxico para C- desenvolvido com Flex no T1.
+O analisador sintático para C- deverá ser desenvolvido com Bison, 
+com base na [especificação sintática de C-](./cminus/cminus-02.md)
+e integrado com uma versão alterada (com #include "token.h"
+e remoção da função main() do  analisador léxico para C- 
+desenvolvido com Flex no T1 (conforme explicado em sala de aula).
 
 ### Notação para a Árvore Sintática Abstrata (Abstract Syntax Tree - AST)
 
@@ -87,7 +95,9 @@ que deverão ser produzidos pelo seu analisador sintático:
 
    * [ID]                 ---> nome de variável
 
-   * ```[\[\]]```               ---> (opcional) símbolo para descrever uma váriavel como array; IMPORTANTE: o símbolo de barra invertida (backslash \) é usado para não interpretar [ ou ] como nós de colchetes, mas para serem símbolos visíveis na AST.
+   * ```[\[\]]```         ---> (opcional) símbolo para descrever uma váriavel como array; 
+
+IMPORTANTE: o símbolo de barra invertida (backslash \) é usado para não interpretar [ ou ] como nós de colchetes, e sim para serem símbolos visíveis na AST.
 
 * ```[fun-declaration  ... ]```
 
@@ -126,7 +136,7 @@ que deverão ser produzidos pelo seu analisador sintático:
       * ver EXPRESSION             --> definição recursiva de qualquer expressão válida
 
    - ```[OP ... ]```              --> operadores de expressão binária
-     ```OP pode ser: +, -, *, /, <, <=, >, >=, ==, !=, =, !```
+     ```OP pode ser: +, -, *, /, <, <=, >, >=, ==, !=, =```
 
       * [var  ... ]      ---> uso de variável
 
@@ -150,42 +160,46 @@ O Bison deverá ser utilizado para geração do analisador sintático,
 trabalhando em conjunto com o analisador léxico 
 gerado pelo Flex (T1).
 
-```$ bison -d cminus.y```
+```$ bison --defines=token.h cminus.y```
 
-A opção -d faz com que o Bison gere o arquivo _cminus.tab.h_, que faz a interface com o analisador léxico gerado pelo Flex.
+A opção --defines faz com que o Bison gere o arquivo _token.h_, 
+que faz a interface com o analisador léxico gerado pelo Flex.
 
    - O arquivo _lexer.l, criado no T1, deverá ser renomeado para _cminus.l_.
-   - Ele deverá ser modificado para incluir o arquivo "cminus.tab.h", gerado pelo Bison.
-Todo o código usado para definir tokens, por exemplo, 
+   - O arquivo _cminus.l_ deverá ser modificado para incluir o arquivo "token.h", gerado pelo Bison.
+   - Todo o código usado para definir tokens, por exemplo, 
 listas ou tipos escalares, usado no T1 deve ser eliminado.
 Os tokens serão definidos no arquivo _cminus.y_, usando a diretiva ```%token```.
 Também deve ser removida a função _main_ usada no T1.
+Obs.: Na pasta _src_ está um template cminus.l, caso queiram usar.
 
 Em seguida, rodar o Flex (observar o novo nome):
 
 ```$ flex cminus.l```
 
 Por fim, 
-compilar e gerar o executável, supondo que 
-As funções da AST devem ser colocadas nos arquivos _ast.c_ e _ast.h_.
-A função _main_ e a função _prettyprint_ 
-para geração de saída no formato _labelled bracket_  
-devem ser colocadas em um arquivo C chamado de _cminus.c_.
+compilar e gerar o executável chamado de _cminus_. 
+As funções para criação e manipulação da AST estão nos arquivos _ast.c_ e _ast.h_.
+A função _main_ chama a função _bracket_
+para geração de saída no formato _labelled bracket_.
+A função _main_ está definida em um arquivo C chamado de _main.c_.
 
-```$ cc -o cminus cminus.tab.c lex.yy.c ast.c cminus.c -ll```
+O arquivo _makefile_ contém instruções para compilar os arquivos 
+e gerar o executável _cminus_. Para limpar os arquivos temporários,
+use o comando ```make clean```.
 
 ### Como executar o analisador sintático
 
 No T2, também usaremos nomes de arquivos passados como argumentos 
 na chamada a _cminus_.
-A função _main_ deve chamar a função _yyparse()_ e passar a raiz da AST retornada
-como entrada para a função _prettyprint_, 
-que percorrerá a AST para gerar sua representação na notação _labelled bracket_.
+A função _main_  chama a função _yyparse()_ que, em caso de sucesso,
+coloca o endereço da raiz da AST na variável _parser_result_, 
+e chama a função _bracket_  para gerar a representação da AST na notação _labelled bracket_.
 Em caso de erro sintático identificado, 
 o mesmo será reportado e a análise interrompida, sem geração de AST.
 
-```$ ./cminus exemplo.cm  exemplo.out```, 
-sendo que _exemplo.cm_ contém o programa-fonte em C- 
+```$ ./cminus nome.cm nome.out```, 
+sendo que o arquivo _nome.cm_ contém o programa-fonte em C- 
 e _exemplo.out_ contém a AST para o programa-fonte 
 representada na notação _labelled bracket_.
 
@@ -193,10 +207,11 @@ representada na notação _labelled bracket_.
 - O nome do arquivo Flex modificado deve ser cminus.l
 - O nome do arquivo Bison deve ser cminus.y
 - Manter os nomes ast.h e ast.c para definição e manipulação da AST
-- O nome do arquivo que contém a função _main_ deve ser cminus.c.
+- O nome do arquivo que contém a função _main_ deve ser main.c.
 
 ## Exemplo 1 
-### Arquivo de entrada em C- (exemplo.cm)
+### Arquivo de entrada em C- exemplo.cm
+(exemplo.cm contém um programa sintaticamente correto.)
 
 ```
 int g;
@@ -218,7 +233,7 @@ void main(void) {
 
     int a[10];
 
-    while(g < 10) do{
+    while (g < 10) do {
         g = foo(g, 2, a);
         ;
     }
@@ -231,7 +246,7 @@ Importante: Caracteres de espacejamento serão ignorados na correção automáti
 
 ```
 [program
-  [var-declaration [int] [g]]
+  [var_declaration [int] [g]]
   [fun-declaration
     [int]
     [foo]
@@ -287,13 +302,11 @@ Importante: Caracteres de espacejamento serão ignorados na correção automáti
 ### Entrada em C-
 
 ```
-int a;
-int const min = 0;
-enum rgb {red,green,blue};
-enum rgb color;
+int min;
+int color;
 void main(void) {
-   a = min;
-   color = red;
+   min = 0;
+   color = 0; // red
 }
 ```
 
@@ -301,27 +314,18 @@ void main(void) {
 
 ```
 [program
-  [var-declaration [int][a]]
-  [const-declaration [int][min][0]]
-  [enum-type-declaration [rgb]
-    [enum_consts
-      [enum-const [red]]
-      [enum-const [green]]
-      [enum-const [blue]]
-    ]
-  ]
-  [enum-var-declaration [rgb][color]]
+  [var-declaration [int][min]]
+  [var-declaration [int][color]]
   [fun-declaration
     [void]
     [main]
     [params]
     [compound-stmt
-       [= [var [a]] [const [min]]]
-       [= [var [color]] [const [red]]
+       [= [var [min]] [0]]
+       [= [var [color]] [0]]
      ]
    ]
 ]
-
 ```
 
 ## Correção Automática
