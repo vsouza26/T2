@@ -16,6 +16,8 @@ extern int yylex();
 
 /***** COMPLETAR *****/
 
+%token TOKEN_EQ
+
 %token TOKEN_ERROR
 
 %start program

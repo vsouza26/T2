@@ -46,5 +46,6 @@ while                       { /* return ... */ }
 [ \t\n]                     { /* no action */ }
 .                           { return TOKEN_ERROR; }
 
+
 %%
 
