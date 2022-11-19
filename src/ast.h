@@ -129,8 +129,8 @@ struct type * type_create(type_t kind,
     struct type *subtype, struct param_list *params);
 
 struct decl * var_decl_create(char *name, struct type *type);
-struct decl * array_decl_create(char *, struct type *, int i);
-struct decl * func_decl_create(char *, struct type *, 
+struct decl * array_decl_create(char *name, struct type *type, int i);
+struct decl * func_decl_create(char *name , struct type *type, 
     struct param_list *pl, struct stmt *body);
 
 struct param_list * param_create(char *name, struct type *type);
